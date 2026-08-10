@@ -7,7 +7,7 @@ export type WordItem = {
   correctTypes: PartOfSpeech[]
 }
 
-export type AnswerOutcome = 'correct' | 'timeout'
+export type AnswerOutcome = 'correct' | 'wrong' | 'timeout'
 
 export type AnswerResult = {
   word: WordItem

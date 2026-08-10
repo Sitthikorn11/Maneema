@@ -106,11 +106,17 @@ export function QuestionScreen({ word, questionNumber, totalQuestions, onNext, o
     const hasWrongPick = current.some((t) => !word.correctTypes.includes(t))
 
     if (hasWrongPick) {
+      if (intervalRef.current) {
+        window.clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
       setPhaseSync('wrong')
       flashTimeoutRef.current = window.setTimeout(() => {
-        setSelectedSync([])
-        setPhaseSync('answering')
-      }, 700)
+        if (!hasAdvancedRef.current) {
+          hasAdvancedRef.current = true
+          onNext('wrong')
+        }
+      }, 1000)
       return
     }
 
@@ -226,7 +232,7 @@ export function QuestionScreen({ word, questionNumber, totalQuestions, onNext, o
 
       {phase === 'wrong' && (
         <p aria-live="polite" className="font-bold text-wrong">
-          Not quite — try again!
+          Wrong!
         </p>
       )}
       {phase === 'correct' && (
