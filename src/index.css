@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-paper: #fbf3d9;
+  --color-paper-line: #e9dfb8;
+  --color-ink: #2b2118;
+
+  --color-brand: #f2994a;
+  --color-brand-dark: #d97b26;
+
+  --color-noun: #3b82f6;
+  --color-noun-light: #dbeafe;
+  --color-verb: #f97316;
+  --color-verb-light: #ffedd5;
+  --color-adjective: #22c55e;
+  --color-adjective-light: #dcfce7;
+  --color-adverb: #a855f7;
+  --color-adverb-light: #f3e8ff;
+
+  --color-correct: #15803d;
+  --color-wrong: #b91c1c;
+  --color-timeout: #b45309;
+}
+
+body {
+  @apply text-ink;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, #fffbe9 0%, var(--color-paper) 55%, #f0e2ad 100%);
+  min-height: 100svh;
+}
