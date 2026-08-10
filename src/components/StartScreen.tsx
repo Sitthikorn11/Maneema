@@ -16,7 +16,7 @@ export function StartScreen({ wordCount, onStart }: StartScreenProps) {
       </TitleBar>
       <StartIllustration />
       <p className="mt-6 mb-8 text-center text-lg font-semibold text-ink/70">
-        Guess the part of speech for all {wordCount} words — 5 seconds each!
+        Guess the part of speech for all {wordCount} words!
       </p>
       <div className="flex justify-center">
         <Button variant="primary" onClick={onStart}>

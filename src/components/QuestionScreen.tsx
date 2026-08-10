@@ -7,7 +7,7 @@ import { HomeButton } from './HomeButton'
 import { NotebookPage } from './NotebookPage'
 import { TitleBar } from './TitleBar'
 
-const TOTAL_MS = 5000
+const TOTAL_MS = 8000
 
 type QuestionScreenProps = {
   word: WordItem
