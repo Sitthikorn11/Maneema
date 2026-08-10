@@ -42,7 +42,7 @@ function App() {
   return (
     <main className="flex min-h-svh items-center justify-center overflow-y-auto p-6">
       <BackgroundDecor />
-      {screen === 'start' && <StartScreen wordCount={words.length} onStart={handleStart} />}
+      {screen === 'start' && <StartScreen onStart={handleStart} />}
       {screen === 'question' && currentWord && (
         <QuestionScreen
           key={currentWord.id}

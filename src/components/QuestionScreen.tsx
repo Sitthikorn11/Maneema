@@ -125,7 +125,7 @@ export function QuestionScreen({ word, questionNumber, totalQuestions, onNext, o
           hasAdvancedRef.current = true
           onNext('correct')
         }
-      }, 350)
+      }, 700)
     }
     // otherwise: a correct-but-incomplete subset (multi-answer word) — keep waiting for more picks
   }
@@ -167,11 +167,12 @@ export function QuestionScreen({ word, questionNumber, totalQuestions, onNext, o
         <h1
           ref={headingRef}
           tabIndex={-1}
-          aria-label={`${word.word}. You have ${TOTAL_MS / 1000} seconds to answer.`}
+          aria-label={`${word.word}, meaning ${word.translation}. You have ${TOTAL_MS / 1000} seconds to answer.`}
           className="text-3xl font-bold outline-none sm:text-4xl"
         >
           {word.word}
         </h1>
+        <p className="mt-1 text-base font-medium text-white/80">{word.translation}</p>
       </TitleBar>
       <p aria-live="assertive" className="sr-only">
         {timeWarning}
