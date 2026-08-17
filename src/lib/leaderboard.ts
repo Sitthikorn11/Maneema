@@ -7,14 +7,13 @@ export async function submitScore(playerName: string, score: number, total: numb
   if (error) throw error
 }
 
-export async function fetchTopScores(limit = 20): Promise<LeaderboardEntry[]> {
+export async function fetchTopScores(): Promise<LeaderboardEntry[]> {
   if (!supabase) throw new Error('Leaderboard is not configured')
   const { data, error } = await supabase
     .from('scores')
     .select('*')
     .order('score', { ascending: false })
     .order('created_at', { ascending: true })
-    .limit(limit)
 
   if (error) throw error
   return data
