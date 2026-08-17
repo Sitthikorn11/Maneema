@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { POS_LABELS } from '../data/partsOfSpeech'
+import type { SubmitStatus } from '../types/leaderboard'
 import type { AnswerResult, PartOfSpeech } from '../types/word'
 import { Button } from './Button'
 import { ResultIllustration } from './illustrations/ResultIllustration'
@@ -8,15 +9,24 @@ import { TitleBar } from './TitleBar'
 
 type ResultScreenProps = {
   results: AnswerResult[]
+  submitStatus: SubmitStatus
   onRestart: () => void
   onHome: () => void
+  onViewLeaderboard: () => void
 }
 
 function formatTypes(types: PartOfSpeech[]) {
   return types.map((type) => POS_LABELS[type]).join(', ')
 }
 
-export function ResultScreen({ results, onRestart, onHome }: ResultScreenProps) {
+function SubmitStatusBadge({ status }: { status: SubmitStatus }) {
+  if (status === 'submitting') return <p className="mt-1 text-sm font-semibold text-white/80">Saving to leaderboard…</p>
+  if (status === 'done') return <p className="mt-1 text-sm font-semibold text-white/80">Saved to leaderboard ✓</p>
+  if (status === 'error') return <p className="mt-1 text-sm font-semibold text-white/80">Couldn't save score to leaderboard</p>
+  return null
+}
+
+export function ResultScreen({ results, submitStatus, onRestart, onHome, onViewLeaderboard }: ResultScreenProps) {
   const correctCount = results.filter((r) => r.outcome === 'correct').length
   const wrongAnswers = results.filter((r) => r.outcome === 'wrong')
   const timeouts = results.filter((r) => r.outcome === 'timeout')
@@ -35,6 +45,7 @@ export function ResultScreen({ results, onRestart, onHome }: ResultScreenProps) 
         <p className="mt-1 text-lg font-semibold">
           Score: {correctCount}/{results.length}
         </p>
+        <SubmitStatusBadge status={submitStatus} />
       </TitleBar>
       <ResultIllustration />
 
@@ -97,6 +108,9 @@ export function ResultScreen({ results, onRestart, onHome }: ResultScreenProps) 
       <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
         <Button variant="primary" onClick={onRestart} className="w-full sm:w-auto">
           Play Again
+        </Button>
+        <Button variant="secondary" onClick={onViewLeaderboard} className="w-full sm:w-auto">
+          🏆 Leaderboard
         </Button>
         <Button variant="secondary" onClick={onHome} className="w-full sm:w-auto">
           Home
