@@ -107,12 +107,7 @@ export function LeaderboardScreen({ onHome }: LeaderboardScreenProps) {
 
           {totalPages > 1 && (
             <div className="mt-4 flex items-center justify-center gap-4">
-              <Button
-                variant="secondary"
-                onClick={() => setPage((p) => p - 1)}
-                disabled={currentPage === 0}
-                className="px-4 py-2 text-sm"
-              >
+              <Button variant="secondary" size="sm" onClick={() => setPage((p) => p - 1)} disabled={currentPage === 0}>
                 ← ก่อนหน้า
               </Button>
               <span className="text-sm font-semibold text-ink/70">
@@ -120,9 +115,9 @@ export function LeaderboardScreen({ onHome }: LeaderboardScreenProps) {
               </span>
               <Button
                 variant="secondary"
+                size="sm"
                 onClick={() => setPage((p) => p + 1)}
                 disabled={currentPage >= totalPages - 1}
-                className="px-4 py-2 text-sm"
               >
                 ถัดไป →
               </Button>
