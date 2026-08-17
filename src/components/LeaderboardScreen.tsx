@@ -14,6 +14,12 @@ type Status = 'loading' | 'success' | 'error'
 
 const PAGE_SIZE = 10
 
+const RANK_MEDALS: Record<number, { border: string; bg: string; badge: string; emoji: string }> = {
+  1: { border: 'border-amber-400', bg: 'bg-amber-50', badge: 'bg-amber-400', emoji: '🥇' },
+  2: { border: 'border-slate-400', bg: 'bg-slate-100', badge: 'bg-slate-300', emoji: '🥈' },
+  3: { border: 'border-orange-400', bg: 'bg-orange-50', badge: 'bg-orange-400', emoji: '🥉' },
+}
+
 function formatWhen(isoDate: string) {
   const date = new Date(isoDate)
   const diffMs = Date.now() - date.getTime()
@@ -86,23 +92,38 @@ export function LeaderboardScreen({ onHome }: LeaderboardScreenProps) {
       {status === 'success' && entries.length > 0 && (
         <>
           <ul className="flex flex-col gap-2">
-            {pageEntries.map((entry, i) => (
-              <li
-                key={entry.id}
-                className="border-ink flex items-center justify-between gap-3 rounded-xl border-2 bg-white px-4 py-3"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="w-6 text-center font-bold text-ink/60">{currentPage * PAGE_SIZE + i + 1}</span>
-                  <span className="font-semibold">{entry.player_name}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-ink/50 text-sm">{formatWhen(entry.created_at)}</span>
-                  <span className="text-correct font-bold">
-                    {entry.score}/{entry.total}
-                  </span>
-                </div>
-              </li>
-            ))}
+            {pageEntries.map((entry, i) => {
+              const rank = currentPage * PAGE_SIZE + i + 1
+              const medal = RANK_MEDALS[rank]
+
+              return (
+                <li
+                  key={entry.id}
+                  className={`flex items-center justify-between gap-3 rounded-xl border-2 px-4 py-3 ${
+                    medal ? `${medal.border} ${medal.bg}` : 'border-ink bg-white'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    {medal ? (
+                      <span
+                        className={`border-ink flex h-8 w-8 items-center justify-center rounded-full border-2 text-lg ${medal.badge}`}
+                      >
+                        {medal.emoji}
+                      </span>
+                    ) : (
+                      <span className="w-8 text-center font-bold text-ink/60">{rank}</span>
+                    )}
+                    <span className="font-semibold">{entry.player_name}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-ink/50 text-sm">{formatWhen(entry.created_at)}</span>
+                    <span className="text-correct font-bold">
+                      {entry.score}/{entry.total}
+                    </span>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
 
           {totalPages > 1 && (
